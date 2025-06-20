@@ -1,5 +1,14 @@
 # scaryzfs 💀
 
+> [!CAUTION]
+>
+> There is a reason that ZFS isn't easily overridable in Nixpkgs without a large
+> amounts of assertions and checks, and that ZFS developers do not distribute or
+> make easily available random versions of ZFS.
+>
+> Using the wrong version, commit, experimental or untested versions of ZFS via
+> scaryzfs may cause damage to your filesystem. Use at your own risk.
+
 `scaryzfs` is a Nix flake that allows you to take manual control of the ZFS
 sources being used in your nixos configuration, and use a fork or pull request
 from ZFS upstream, despite the danger in doing so, in order to test or use more
