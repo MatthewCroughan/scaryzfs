@@ -64,7 +64,6 @@ in {
         inherit configFile kernel;
       } {
         kernelModuleAttribute = "scaryzfs";
-        kernel = kernel;
         kernelMinSupportedMajorMinor = kernel.version;
         kernelMaxSupportedMajorMinor = kernel.version;
         version = "scary";
