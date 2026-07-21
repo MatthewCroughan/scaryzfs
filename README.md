@@ -74,6 +74,7 @@ You may wish to use flake inputs instead of manually fetching and hashing the so
               enable = true;
               iKnowTheRisks = true;
               kernelPackages = pkgs.linuxPackages_testing;
+              version = "2.3.3";
               zfsSrc = zfs-src;
             };
           }

@@ -38,6 +38,26 @@ in {
       description = "The kernel packages to use for the scary experimental ZFS setup. This sets boot.kernelPackages on your behalf";
     };
 
+    version = mkOption {
+      type = types.str;
+      default = null;
+      defaultText = literalExpression "null";
+      description = ''
+        A version number to pass to pkgs/os-specific/linux/zfs/generic.nix,
+        required to avoid applying patches that are not relevant to your
+        version.
+      '';
+    };
+
+    overrideAttrs = mkOption {
+      type = types.attrs;
+      default = {};
+      defaultText = literalExpression "{}";
+      description = ''
+        Extra nix attributes to pass to the override of pkgs/os-specific/linux/zfs/generic.nix
+      '';
+    };
+
     zfsSrc = mkOption {
       type = types.nullOr types.path;
       default = null;
@@ -64,9 +84,9 @@ in {
         inherit configFile kernel;
       } {
         kernelModuleAttribute = "scaryzfs";
-        kernelMinSupportedMajorMinor = kernel.version;
-        kernelMaxSupportedMajorMinor = kernel.version;
-        version = "scary";
+        kernelMinSupportedMajorMinor = "4.18";
+        kernelMaxSupportedMajorMinor = config.boot.kernelPackages.kernel.version;
+        version = cfg.version;
         rev = "";
         hash = "";
         tests = {};
@@ -74,7 +94,7 @@ in {
         src = cfg.zfsSrc;
         configureFlags = old.configureFlags ++ [ "--enable-linux-experimental" ];
         meta.broken = false;
-      })
+      } // cfg.overrideAttrs)
     );
   in mkIf cfg.enable {
     assertions = [
